@@ -26,11 +26,10 @@ document.getElementById("keyword").addEventListener("input", function (event) {
 
           // Lấy các sản phẩm từ thẻ có class "flex-product-main"
           const flexProductMain = doc.querySelector(".flex-product-main");
+          const products = [];
           if (flexProductMain) {
-            const products = [];
             const productItems =
               flexProductMain.querySelectorAll(".product-item");
-            console.log(productItems);
 
             productItems.forEach((item) => {
               const productName = item.querySelector(".product-name a")
