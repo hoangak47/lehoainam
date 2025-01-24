@@ -81,7 +81,7 @@ document.getElementById("keyword").addEventListener("input", function (event) {
 // Hàm hiển thị gợi ý danh sách sản phẩm
 function displayProductSuggestions(products) {
   // Tìm thẻ cha .form.search
-  const searchForm = document.querySelector(".form.search");
+  const searchForm = document.querySelector("form.search");
 
   // Tạo container cho gợi ý nếu chưa có
   let suggestionsContainer = searchForm.querySelector("#suggestions-container");
