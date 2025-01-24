@@ -10,7 +10,6 @@ document.getElementById("keyword").addEventListener("input", function (event) {
       const url = `http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/tim-kiem?keyword=${encodeURIComponent(
         keyword
       )}`;
-      console.log(url);
 
       // Gửi yêu cầu fetch
       fetch(url)
@@ -21,7 +20,17 @@ document.getElementById("keyword").addEventListener("input", function (event) {
           return response.text(); // Trả về mã HTML dạng text
         })
         .then((html) => {
-          console.log(html); // Log mã HTML ra console
+          // Parse HTML response thành DOM
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
+
+          // Lấy nội dung từ thẻ có class "flex-product-main"
+          const flexProductMain = doc.querySelector(".flex-product-main");
+          if (flexProductMain) {
+            console.log(flexProductMain.outerHTML); // Log toàn bộ HTML của thẻ
+          } else {
+            console.warn('Không tìm thấy thẻ có class "flex-product-main".');
+          }
         })
         .catch((error) => {
           console.error("Error fetching data:", error); // Xử lý lỗi
