@@ -26,8 +26,8 @@ document.getElementById("keyword").addEventListener("input", function (event) {
 
           // Lấy các sản phẩm từ thẻ có class "flex-product-main"
           const flexProductMain = doc.querySelector(".flex-product-main");
-          const products = [];
           if (flexProductMain) {
+            const products = [];
             const productItems =
               flexProductMain.querySelectorAll(".product-item");
 
@@ -35,26 +35,39 @@ document.getElementById("keyword").addEventListener("input", function (event) {
               const productName = item.querySelector(".product-name a")
                 ? item.querySelector(".product-name a").textContent.trim()
                 : null;
-              console.log(productName);
               const productPrice = item.querySelector(".price-new")
                 ? item.querySelector(".price-new").textContent.trim()
                 : null;
               const productImage = item.querySelector(".product-photo img")
                 ? item.querySelector(".product-photo img").getAttribute("src")
                 : null;
+              const productUrl = item.querySelector(".product-name a")
+                ? item.querySelector(".product-name a").getAttribute("href")
+                : null;
 
-              // Thêm thông tin vào mảng
-              if (productName && productPrice && productImage) {
+              // Log từng giá trị để kiểm tra
+              console.log("Product Name:", productName);
+              console.log("Product Price:", productPrice);
+              console.log("Product Image:", productImage);
+              console.log("Product URL:", productUrl);
+
+              // Kiểm tra và thêm sản phẩm vào mảng nếu tất cả giá trị hợp lệ
+              if (productName && productPrice && productImage && productUrl) {
                 products.push({
                   name: productName,
                   price: productPrice,
                   image: productImage,
+                  url: productUrl, // Thêm URL vào mảng
                 });
+              } else {
+                console.warn(
+                  "Không đầy đủ thông tin sản phẩm, không thêm vào mảng."
+                );
               }
             });
 
             // Log mảng các sản phẩm
-            console.log(products);
+            console.log("Products Array:", products);
           } else {
             console.warn('Không tìm thấy thẻ có class "flex-product-main".');
           }
