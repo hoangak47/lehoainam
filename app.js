@@ -47,7 +47,7 @@ document.getElementById("keyword").addEventListener("input", function (event) {
                 ? item.querySelector(".product-name a").getAttribute("href")
                 : null;
 
-              // Nếu không có hình ảnh, sử dụng hình ảnh thay thế
+              // Kiểm tra nếu không có data-src, sử dụng hình ảnh thay thế
               const finalImage =
                 productImage ||
                 "http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/thumbs/400x400x2/assets/images/noimage.webp.webp";
