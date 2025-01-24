@@ -15,7 +15,9 @@ document.getElementById("icon-search").addEventListener("click", function () {
         const keyword = event.target.value.trim();
         if (keyword) {
           // Tạo URL với từ khóa
-          const url = `/tim-kiem?keyword=${encodeURIComponent(keyword)}`;
+          const url = `http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/tim-kiem?keyword=${encodeURIComponent(
+            keyword
+          )}`;
 
           // Gửi yêu cầu fetch
           fetch(url)
