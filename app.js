@@ -35,6 +35,7 @@ document.getElementById("keyword").addEventListener("input", function (event) {
               const productName = item.querySelector(".product-name a")
                 ? item.querySelector(".product-name a").textContent.trim()
                 : null;
+              console.log(productName);
               const productPrice = item.querySelector(".price-new")
                 ? item.querySelector(".price-new").textContent.trim()
                 : null;
