@@ -64,6 +64,7 @@ document.getElementById("keyword").addEventListener("input", function (event) {
             });
 
             // Gọi hàm hiển thị gợi ý danh sách sản phẩm
+            console.log(products);
             displayProductSuggestions(products);
           } else {
             console.warn('Không tìm thấy thẻ có class "flex-product-main".');
