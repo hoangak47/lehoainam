@@ -89,13 +89,14 @@ function displayProductSuggestions(products) {
     suggestionsContainer = document.createElement("div");
     suggestionsContainer.id = "suggestions-container";
     suggestionsContainer.style.position = "absolute";
-    suggestionsContainer.style.top = "100%";
+    suggestionsContainer.style.top = "0";
     suggestionsContainer.style.left = "0";
     suggestionsContainer.style.width = "100%";
     suggestionsContainer.style.maxHeight = "300px";
     suggestionsContainer.style.overflowY = "auto";
     suggestionsContainer.style.backgroundColor = "white";
     suggestionsContainer.style.border = "1px solid #ccc";
+    suggestionsContainer.style.zIndex = "999";
     suggestionsContainer.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
     searchForm.appendChild(suggestionsContainer);
   }
