@@ -279,7 +279,7 @@ function displayProductSuggestionsa(products) {
       input.offsetTop + input.offsetHeight
     }px`;
     suggestionsContainer.style.left = `${input.offsetLeft}px`;
-    suggestionsContainer.style.width = `${input.offsetWidth}px`;
+    suggestionsContainer.style.width = `100%`;
 
     suggestionsContainer.style.maxHeight = "300px";
     suggestionsContainer.style.overflowY = "auto";
