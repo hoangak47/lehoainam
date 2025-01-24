@@ -162,6 +162,12 @@ function displayProductSuggestions(products) {
 
     suggestionsContainer.appendChild(suggestionItem);
   });
+
+  document.addEventListener("click", (event) => {
+    if (!searchForm.contains(event.target)) {
+      clearSuggestions();
+    }
+  });
 }
 
 // Hàm xóa tất cả gợi ý khi không có kết quả hoặc người dùng xóa từ khóa
