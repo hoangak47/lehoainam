@@ -30,6 +30,7 @@ document.getElementById("keyword").addEventListener("input", function (event) {
             const products = [];
             const productItems =
               flexProductMain.querySelectorAll(".product-item");
+            console.log(productItems);
 
             productItems.forEach((item) => {
               const productName = item.querySelector(".product-name a")
