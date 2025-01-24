@@ -42,35 +42,18 @@ document.getElementById("keyword").addEventListener("input", function (event) {
                 ? item
                     .querySelector(".product-photo img")
                     .getAttribute("data-src")
-                : null;
+                : "http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/thumbs/400x400x2/assets/images/noimage.webp.webp";
               const productUrl = item.querySelector(".product-name a")
                 ? item.querySelector(".product-name a").getAttribute("href")
                 : null;
 
-              // Kiểm tra nếu không có data-src, sử dụng hình ảnh thay thế
-              const finalImage =
-                productImage ||
-                "http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/thumbs/400x400x2/assets/images/noimage.webp.webp";
-
-              // Log từng giá trị để kiểm tra
-              console.log("Product Name:", productName);
-              console.log("Product Price:", productPrice);
-              console.log("Product Image (data-src or default):", finalImage);
-              console.log("Product URL:", productUrl);
-
               // Kiểm tra và thêm sản phẩm vào mảng nếu tất cả giá trị hợp lệ
-              if (productName && productPrice && finalImage && productUrl) {
-                products.push({
-                  name: productName,
-                  price: productPrice,
-                  image: finalImage, // Sử dụng hình ảnh thay thế nếu không có data-src
-                  url: productUrl, // Thêm URL vào mảng
-                });
-              } else {
-                console.warn(
-                  "Không đầy đủ thông tin sản phẩm, không thêm vào mảng."
-                );
-              }
+              products.push({
+                name: productName,
+                price: productPrice,
+                image: productImage, // Sử dụng hình ảnh thay thế nếu không có data-src
+                url: productUrl, // Thêm URL vào mảng
+              });
             });
 
             // Log mảng các sản phẩm
