@@ -10,6 +10,7 @@ document.getElementById("keyword").addEventListener("input", function (event) {
       const url = `http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/tim-kiem?keyword=${encodeURIComponent(
         keyword
       )}`;
+      console.log(url);
 
       // Gửi yêu cầu fetch
       fetch(url)
