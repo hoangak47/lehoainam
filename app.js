@@ -85,6 +85,7 @@ function displayProductSuggestions(products) {
 
   // Tạo container cho gợi ý nếu chưa có
   let suggestionsContainer = searchForm.querySelector("#suggestions-container");
+  console.log(suggestionsContainer);
   if (!suggestionsContainer) {
     suggestionsContainer = document.createElement("div");
     suggestionsContainer.id = "suggestions-container";
@@ -99,6 +100,7 @@ function displayProductSuggestions(products) {
     suggestionsContainer.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
     searchForm.appendChild(suggestionsContainer);
   }
+  console.log("suggestionsContainer");
 
   suggestionsContainer.innerHTML = ""; // Xóa tất cả gợi ý cũ
 
