@@ -40,7 +40,7 @@ document.getElementById("keyword").addEventListener("input", function (event) {
                 : null;
               const productImage = item.querySelector(".product-photo img")
                 ? item.querySelector(".product-photo img").getAttribute("src")
-                : null;
+                : "http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/thumbs/400x400x2/assets/images/noimage.webp.webp";
               const productUrl = item.querySelector(".product-name a")
                 ? item.querySelector(".product-name a").getAttribute("href")
                 : null;
