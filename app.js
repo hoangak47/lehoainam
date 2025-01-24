@@ -352,6 +352,10 @@ function displayProductSuggestionsa(products) {
   });
 }
 
+document.querySelectorAll(".search-res, .search-grid").forEach((element) => {
+  element.style.overflow = "unset";
+});
+
 // Hàm xóa tất cả gợi ý khi không có kết quả hoặc người dùng xóa từ khóa
 function clearSuggestions() {
   const suggestionsContainer = document.querySelector("#suggestions-container");
