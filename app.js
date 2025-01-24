@@ -64,7 +64,6 @@ document.getElementById("keyword").addEventListener("input", function (event) {
             });
 
             // Gọi hàm hiển thị gợi ý danh sách sản phẩm
-            console.log(products);
             displayProductSuggestions(products);
           } else {
             console.warn('Không tìm thấy thẻ có class "flex-product-main".');
@@ -81,29 +80,65 @@ document.getElementById("keyword").addEventListener("input", function (event) {
 
 // Hàm hiển thị gợi ý danh sách sản phẩm
 function displayProductSuggestions(products) {
-  const suggestionsContainer = document.getElementById("suggestions-container");
+  // Tìm thẻ cha .form.search
+  const searchForm = document.querySelector(".form.search");
+
+  // Tạo container cho gợi ý nếu chưa có
+  let suggestionsContainer = searchForm.querySelector("#suggestions-container");
+  if (!suggestionsContainer) {
+    suggestionsContainer = document.createElement("div");
+    suggestionsContainer.id = "suggestions-container";
+    suggestionsContainer.style.position = "absolute";
+    suggestionsContainer.style.top = "100%";
+    suggestionsContainer.style.left = "0";
+    suggestionsContainer.style.width = "100%";
+    suggestionsContainer.style.maxHeight = "300px";
+    suggestionsContainer.style.overflowY = "auto";
+    suggestionsContainer.style.backgroundColor = "white";
+    suggestionsContainer.style.border = "1px solid #ccc";
+    suggestionsContainer.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+    searchForm.appendChild(suggestionsContainer);
+  }
+
   suggestionsContainer.innerHTML = ""; // Xóa tất cả gợi ý cũ
 
   // Duyệt qua danh sách sản phẩm và tạo các mục gợi ý
   products.forEach((product) => {
     const suggestionItem = document.createElement("div");
-    suggestionItem.classList.add("suggestion-item");
+    suggestionItem.style.display = "flex";
+    suggestionItem.style.padding = "10px";
+    suggestionItem.style.cursor = "pointer";
+    suggestionItem.style.borderBottom = "1px solid #ddd";
+    suggestionItem.style.transition = "background-color 0.3s";
+
+    suggestionItem.addEventListener("mouseenter", () => {
+      suggestionItem.style.backgroundColor = "#f0f0f0"; // Đổi màu khi hover
+    });
+    suggestionItem.addEventListener("mouseleave", () => {
+      suggestionItem.style.backgroundColor = ""; // Khôi phục màu khi rời chuột
+    });
 
     const productImage = document.createElement("img");
     productImage.src = product.image;
     productImage.alt = product.name;
-    productImage.classList.add("suggestion-image");
+    productImage.style.width = "50px";
+    productImage.style.height = "50px";
+    productImage.style.marginRight = "10px";
+    productImage.style.objectFit = "cover"; // Đảm bảo hình ảnh luôn đầy đủ
 
     const productInfo = document.createElement("div");
-    productInfo.classList.add("suggestion-info");
+    productInfo.style.display = "flex";
+    productInfo.style.flexDirection = "column";
 
     const productName = document.createElement("div");
-    productName.classList.add("suggestion-name");
     productName.textContent = product.name;
+    productName.style.fontWeight = "bold";
+    productName.style.marginBottom = "5px";
 
     const productPrice = document.createElement("div");
-    productPrice.classList.add("suggestion-price");
     productPrice.textContent = product.price;
+    productPrice.style.color = "green";
+    productPrice.style.fontSize = "14px";
 
     productInfo.appendChild(productName);
     productInfo.appendChild(productPrice);
@@ -122,6 +157,8 @@ function displayProductSuggestions(products) {
 
 // Hàm xóa tất cả gợi ý khi không có kết quả hoặc người dùng xóa từ khóa
 function clearSuggestions() {
-  const suggestionsContainer = document.getElementById("suggestions-container");
-  suggestionsContainer.innerHTML = "";
+  const suggestionsContainer = document.querySelector("#suggestions-container");
+  if (suggestionsContainer) {
+    suggestionsContainer.innerHTML = "";
+  }
 }
