@@ -83,15 +83,23 @@ function displayProductSuggestions(products) {
   const searchForm = document.querySelector("form.search");
   searchForm.classList.add("relative");
 
+  const input = searchForm.querySelector("#keyword"); // Lấy input trong form
+
   // Tạo container cho gợi ý nếu chưa có
   let suggestionsContainer = searchForm.querySelector("#suggestions-container");
   if (!suggestionsContainer) {
     suggestionsContainer = document.createElement("div");
     suggestionsContainer.id = "suggestions-container";
     suggestionsContainer.style.position = "absolute";
-    suggestionsContainer.style.top = "0";
-    suggestionsContainer.style.left = "0";
-    suggestionsContainer.style.width = "100%";
+
+    // Xác định vị trí bên dưới input
+    const inputRect = input.getBoundingClientRect();
+    suggestionsContainer.style.top = `${
+      input.offsetTop + input.offsetHeight
+    }px`;
+    suggestionsContainer.style.left = `${input.offsetLeft}px`;
+    suggestionsContainer.style.width = `${input.offsetWidth}px`;
+
     suggestionsContainer.style.maxHeight = "300px";
     suggestionsContainer.style.overflowY = "auto";
     suggestionsContainer.style.backgroundColor = "white";
