@@ -1,92 +1,79 @@
 let debounceTimeout;
 
-// Kiểm tra xem icon-search có class "active" không
-document.getElementById("icon-search").addEventListener("click", function () {
-  const isActive = this.classList.contains("active");
-  const formSelector = isActive ? "form.search-grid" : "form.search"; // Chọn form dựa trên trạng thái active của icon
-  const inputSelector = isActive ? "#keyword-res" : "#keyword"; // Chọn input dựa trên trạng thái active của icon
+document.getElementById("keyword").addEventListener("input", function (event) {
+  clearTimeout(debounceTimeout); // Xóa bộ đếm trước đó nếu người dùng nhập liên tục
 
-  document
-    .querySelector(inputSelector)
-    .addEventListener("input", function (event) {
-      clearTimeout(debounceTimeout); // Xóa bộ đếm trước đó nếu người dùng nhập liên tục
+  debounceTimeout = setTimeout(function () {
+    const keyword = event.target.value.trim();
+    if (keyword) {
+      // Tạo URL với từ khóa
+      const url = `/tim-kiem?keyword=${encodeURIComponent(keyword)}`;
 
-      debounceTimeout = setTimeout(function () {
-        const keyword = event.target.value.trim();
-        if (keyword) {
-          // Tạo URL với từ khóa
-          const url = `http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/tim-kiem?keyword=${encodeURIComponent(
-            keyword
-          )}`;
+      // Gửi yêu cầu fetch
+      fetch(url)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.text(); // Trả về mã HTML dạng text
+        })
+        .then((html) => {
+          // Parse HTML response thành DOM
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
 
-          // Gửi yêu cầu fetch
-          fetch(url)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              return response.text(); // Trả về mã HTML dạng text
-            })
-            .then((html) => {
-              // Parse HTML response thành DOM
-              const parser = new DOMParser();
-              const doc = parser.parseFromString(html, "text/html");
+          // Lấy các sản phẩm từ thẻ có class "flex-product-main"
+          const flexProductMain = doc.querySelector(".flex-product-main");
+          if (flexProductMain) {
+            const products = [];
+            const productItems =
+              flexProductMain.querySelectorAll(".product-item");
 
-              // Lấy các sản phẩm từ thẻ có class "flex-product-main"
-              const flexProductMain = doc.querySelector(".flex-product-main");
-              if (flexProductMain) {
-                const products = [];
-                const productItems =
-                  flexProductMain.querySelectorAll(".product-item");
+            productItems.forEach((item) => {
+              const productName = item.querySelector(".product-name a")
+                ? item.querySelector(".product-name a").textContent.trim()
+                : null;
+              const productPrice = item.querySelector(".price-new")
+                ? item.querySelector(".price-new").textContent.trim()
+                : null;
+              const productImage = item.querySelector(".product-photo img")
+                ? item
+                    .querySelector(".product-photo img")
+                    .getAttribute("data-src")
+                : null;
+              const productUrl = item.querySelector(".product-name a")
+                ? item.querySelector(".product-name a").getAttribute("href")
+                : null;
 
-                productItems.forEach((item) => {
-                  const productName = item.querySelector(".product-name a")
-                    ? item.querySelector(".product-name a").textContent.trim()
-                    : null;
-                  const productPrice = item.querySelector(".price-new")
-                    ? item.querySelector(".price-new").textContent.trim()
-                    : null;
-                  const productImage = item.querySelector(".product-photo img")
-                    ? item
-                        .querySelector(".product-photo img")
-                        .getAttribute("data-src")
-                    : null;
-                  const productUrl = item.querySelector(".product-name a")
-                    ? item.querySelector(".product-name a").getAttribute("href")
-                    : null;
+              // Kiểm tra nếu không có data-src, sử dụng hình ảnh thay thế
+              const finalImage =
+                productImage ||
+                "http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/thumbs/400x400x2/assets/images/noimage.webp.webp";
 
-                  // Kiểm tra nếu không có data-src, sử dụng hình ảnh thay thế
-                  const finalImage =
-                    productImage ||
-                    "http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/thumbs/400x400x2/assets/images/noimage.webp.webp";
-
-                  // Kiểm tra và thêm sản phẩm vào mảng nếu tất cả giá trị hợp lệ
-                  if (productName && productPrice && finalImage && productUrl) {
-                    products.push({
-                      name: productName,
-                      price: productPrice,
-                      image: finalImage, // Sử dụng hình ảnh thay thế nếu không có data-src
-                      url: productUrl, // Thêm URL vào mảng
-                    });
-                  }
+              // Kiểm tra và thêm sản phẩm vào mảng nếu tất cả giá trị hợp lệ
+              if (productName && productPrice && finalImage && productUrl) {
+                products.push({
+                  name: productName,
+                  price: productPrice,
+                  image: finalImage, // Sử dụng hình ảnh thay thế nếu không có data-src
+                  url: productUrl, // Thêm URL vào mảng
                 });
-
-                // Gọi hàm hiển thị gợi ý danh sách sản phẩm
-                displayProductSuggestions(products);
-              } else {
-                console.warn(
-                  'Không tìm thấy thẻ có class "flex-product-main".'
-                );
               }
-            })
-            .catch((error) => {
-              console.error("Error fetching data:", error); // Xử lý lỗi
             });
-        } else {
-          clearSuggestions(); // Nếu không có từ khóa, xóa danh sách gợi ý
-        }
-      }, 600); // Chờ 0.6 giây trước khi thực thi
-    });
+
+            // Gọi hàm hiển thị gợi ý danh sách sản phẩm
+            displayProductSuggestions(products);
+          } else {
+            console.warn('Không tìm thấy thẻ có class "flex-product-main".');
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error); // Xử lý lỗi
+        });
+    } else {
+      clearSuggestions(); // Nếu không có từ khóa, xóa danh sách gợi ý
+    }
+  }, 600); // Chờ 0.6 giây trước khi thực thi
 });
 
 // Hàm hiển thị gợi ý danh sách sản phẩm
