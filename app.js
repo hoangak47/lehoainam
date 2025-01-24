@@ -363,3 +363,33 @@ function clearSuggestions() {
     suggestionsContainer.innerHTML = "";
   }
 }
+
+let spanElement = document.querySelector(".section-tiktok h2 span");
+if (spanElement) {
+  spanElement.textContent = "KHUYẾN MÃI - BIG SALE";
+}
+
+let modalTitle = document.querySelector(".modal-title");
+
+if (modalTitle) {
+  modalTitle.style.textAlign = "center";
+  modalTitle.style.width = "100%";
+  modalTitle.style.color = "var(--color-main)";
+  modalTitle.style.fontSize = "20px";
+  modalTitle.style.fontWeight = "bold";
+  modalTitle.style.textTransform = "uppercase";
+  modalTitle.classList.add("fa-bounce");
+}
+let menuRes = document.querySelector(".menu-res");
+
+if (menuRes) {
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 150) {
+      // Khi cuộn xuống
+      menuRes.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.6)";
+    } else {
+      // Khi ở đầu trang
+      menuRes.style.boxShadow = "none";
+    }
+  });
+}
