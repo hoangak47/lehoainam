@@ -1,4 +1,5 @@
 let debounceTimeout;
+const url_ = window.location.origin;
 
 document.getElementById("keyword").addEventListener("input", function (event) {
   clearTimeout(debounceTimeout); // Xóa bộ đếm trước đó nếu người dùng nhập liên tục
@@ -7,9 +8,7 @@ document.getElementById("keyword").addEventListener("input", function (event) {
     const keyword = event.target.value.trim();
     if (keyword) {
       // Tạo URL với từ khóa
-      const url = `http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/tim-kiem?keyword=${encodeURIComponent(
-        keyword
-      )}`;
+      const url = `${url_}/tim-kiem?keyword=${encodeURIComponent(keyword)}`;
 
       // Gửi yêu cầu fetch
       fetch(url)
@@ -50,7 +49,7 @@ document.getElementById("keyword").addEventListener("input", function (event) {
               // Kiểm tra nếu không có data-src, sử dụng hình ảnh thay thế
               const finalImage =
                 productImage ||
-                "http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/thumbs/400x400x2/assets/images/noimage.webp.webp";
+                `${url_}/thumbs/400x400x2/assets/images/noimage.webp.webp`;
 
               // Kiểm tra và thêm sản phẩm vào mảng nếu tất cả giá trị hợp lệ
               if (productName && productPrice && finalImage && productUrl) {
@@ -188,9 +187,7 @@ document
       const keyword = event.target.value.trim();
       if (keyword) {
         // Tạo URL với từ khóa
-        const url = `http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/tim-kiem?keyword=${encodeURIComponent(
-          keyword
-        )}`;
+        const url = `${url_}/tim-kiem?keyword=${encodeURIComponent(keyword)}`;
 
         // Gửi yêu cầu fetch
         fetch(url)
@@ -231,7 +228,7 @@ document
                 // Kiểm tra nếu không có data-src, sử dụng hình ảnh thay thế
                 const finalImage =
                   productImage ||
-                  "http://demo52.ninavietnam.org/2025/thang1/lehoainam_1982924w/thumbs/400x400x2/assets/images/noimage.webp.webp";
+                  `${url_}/thumbs/400x400x2/assets/images/noimage.webp.webp`;
 
                 // Kiểm tra và thêm sản phẩm vào mảng nếu tất cả giá trị hợp lệ
                 if (productName && productPrice && finalImage && productUrl) {
